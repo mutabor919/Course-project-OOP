@@ -1,73 +1,70 @@
-﻿//Упрощенная версия игры Blackjack: от одного до семи игроков
-#include <iostream>
-#include <string>
+﻿#include <iostream>
 #include <vector>
-#include <algorithm>
-#include <ctime>
+#include <string>
+#include <limits> // для numeric_limits
+#include "Game.h"
 
-#include <fstream>
+using namespace std;
 
-// Класс ставок
-class Bet {
-public:
-    Bet(int initial = 100) : m_Balance(initial), m_CurrentBet(0), m_IsBankrupt(false) {}
+int main() {
+    cout << "\t\tWelcome to Blackjack!\n";
 
-    // Поставить ставку
-    bool PlaceBet(int amount) {
-        if (m_IsBankrupt) {
-            std::cout << "You have no money left. You are out of the game.\n";
-            return false;
+    int numPlayers = 0;
+    while (true) {
+        cout << "How many players? (1 - 7): ";
+        cin >> numPlayers;
+
+        if (cin.fail()) {
+            cin.clear(); // Сброс флага ошибки
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Очистка буфера
+            cout << "Invalid input. Please enter a number between 1 and 7.\n";
         }
-
-        if (amount > m_Balance) {
-            std::cout << "Bet cannot be greater than your current balance (" << m_Balance << ").\n";
-            return false;
-            exit(0);
+        else if (numPlayers < 1 || numPlayers > 7) {
+            cout << "Please enter a number between 1 and 7.\n";
         }
-
-        if (amount <= 0) {
-            std::cout << "Bet must be a positive amount.\n";
-            return false;
-           
+        else {
+            break;
         }
-
-        m_CurrentBet = amount;
-        m_Balance -= amount;
-
-        return true;
     }
 
-    bool IsBankrupt() const {
-        return m_Balance == 0;
+    vector<string> names;
+    for (int i = 0; i < numPlayers; ++i) {
+        string name;
+        while (true) {
+            cout << "Enter player " << i + 1 << " name: ";
+            cin >> name;
+
+            if (cin.fail()) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid name. Please try again.\n";
+            }
+            else if (name.empty()) {
+                cout << "Name cannot be empty. Try again.\n";
+            }
+            else {
+                names.push_back(name);
+                break;
+            }
+        }
     }
 
-    // Победа
-    void Win() {
-        if (m_IsBankrupt) return;
-        m_Balance += m_CurrentBet * 2;
-        m_CurrentBet = 0;
+    try {
+        Game aGame(names);
+        char again = 'y';
+        while (again != 'n' && again != 'N') {
+            aGame.Play();
+            cout << "\nDo you want to play again? (Y/N): ";
+            cin >> again;
+        }
+    }
+    catch (const exception& ex) {
+        cerr << "Error occurred: " << ex.what() << endl;
+    }
+    catch (...) {
+        cerr << "Unknown error occurred." << endl;
     }
 
-    // Поражение
-    void Lose() {
-        if (m_IsBankrupt) return;
-        m_CurrentBet = 0;
-    }
-
-    // Ничья
-    void Push() {
-        if (m_IsBankrupt) return;
-        m_Balance += m_CurrentBet;
-        m_CurrentBet = 0;
-    }
-
-    int GetBalance() const {
-        return m_Balance;
-    }
-
-
-private:
-    int m_Balance;
-    int m_CurrentBet;
-    bool m_IsBankrupt;
-};
+    cout << "\nThanks for playing! Goodbye!\n";
+    return 0;
+}

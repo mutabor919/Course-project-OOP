@@ -322,3 +322,60 @@ Vlad wins.
 Vlad placed a bet of 90
 Vlad placed a bet of 10
 Vlad is bankrupt and removed from the game.
+Denis placed a bet of 100
+Vlad placed a bet of 76
+Denis wins.
+Denis placed a bet of 100
+Vlad placed a bet of 24
+Denis wins.
+Vlad is bankrupt and removed from the game.
+Denis placed a bet of 300
+Denis is bankrupt and removed from the game.
+Vladislav placed a bet of 80
+Maxim placed a bet of 100
+Vladislav wins.
+Maxim is bankrupt and removed from the game.
+Vladislav placed a bet of 100
+Vladislav placed a bet of 80
+Vladislav pushes.
+Vladislav placed a bet of 80
+Vladislav wins.
+Vladislav placed a bet of 160
+Vladislav wins.
+Vladislav placed a bet of 320
+Vladislav is bankrupt and removed from the game.
+Vlad placed a bet of 100
+Vlad is bankrupt and removed from the game.
+Vlad placed a bet of 100
+Vlad wins.
+Vlad placed a bet of 200
+Vlad loses.
+Vlad is bankrupt and removed from the game.
+Vlad placed a bet of 100
+Maxim placed a bet of 50
+Maxim wins.
+Vlad is bankrupt and removed from the game.
+Maxim placed a bet of 1
+Maxim loses.
+Vlad placed a bet of 100
+Vlad loses.
+Vlad is bankrupt and removed from the game.
+Vlad placed a bet of 100
+Vlad wins.
+Vlad placed a bet of 200
+Vlad loses.
+Vlad is bankrupt and removed from the game.
+Denis placed a bet of 100
+Denis wins.
+Denis placed a bet of 200
+Denis loses.
+Denis is bankrupt and removed from the game.
+Vladislav placed a bet of 100
+Vladislav wins.
+Vlad placed a bet of 100
+Max placed a bet of 100
+Max loses.
+Vlad is bankrupt and removed from the game.
+Max is bankrupt and removed from the game.
+fsafa placed a bet of 100
+fsafa wins.
