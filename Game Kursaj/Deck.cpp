@@ -5,8 +5,6 @@
 #include <iostream>
 #include "Hand.h"
 
-using namespace std;
-
 Deck::Deck() {
     m_Cards.reserve(52);
     Populate();
@@ -34,15 +32,15 @@ void Deck::Deal(Hand& aHand) {
         m_Cards.pop_back();
     }
     else {
-        cout << "Out of cards. Unable to deal.\n";
+        std::cout << "Out of cards. Unable to deal.\n";
     }
 }
 
 void Deck::AdditionalCards(GenericPlayer& aGenericPlayer) {
-    cout << endl;
+    std::cout << std::endl;
     while (!aGenericPlayer.IsBusted() && aGenericPlayer.IsHitting()) {
         Deal(aGenericPlayer);
-        cout << aGenericPlayer << endl;
+        std::cout << aGenericPlayer << std::endl;
         if (aGenericPlayer.IsBusted()) aGenericPlayer.Bust();
     }
 }

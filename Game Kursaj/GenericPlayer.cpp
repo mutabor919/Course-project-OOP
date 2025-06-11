@@ -1,14 +1,14 @@
 #include "GenericPlayer.h"
 #include <iostream>
 
-GenericPlayer::GenericPlayer(const string& name) : m_Name(name) {}
+GenericPlayer::GenericPlayer(const std::string& name) : m_Name(name) {}
 
 GenericPlayer::~GenericPlayer() {}
 
-ostream& operator<<(ostream& os, const GenericPlayer& aGenericPlayer) {
+std::ostream& operator<<(std::ostream& os, const GenericPlayer& aGenericPlayer) {
     os << aGenericPlayer.m_Name << ":\t";
     if (!aGenericPlayer.m_Cards.empty()) {
-        for (vector<Card*>::const_iterator pCard = aGenericPlayer.m_Cards.begin(); pCard != aGenericPlayer.m_Cards.end(); ++pCard) {
+        for (std::vector<Card*>::const_iterator pCard = aGenericPlayer.m_Cards.begin(); pCard != aGenericPlayer.m_Cards.end(); ++pCard) {
             os << *(*pCard) << "\t";
         }
         if (aGenericPlayer.GetTotal() != 0) os << "(" << aGenericPlayer.GetTotal() << ")";
@@ -22,5 +22,5 @@ bool GenericPlayer::IsBusted() const {
 }
 
 void GenericPlayer::Bust() const {
-    cout << m_Name << " busts.\n";
+    std::cout << m_Name << " busts.\n";
 }

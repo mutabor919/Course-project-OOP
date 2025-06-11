@@ -1,70 +1,74 @@
 ﻿#include <iostream>
 #include <vector>
 #include <string>
-#include <limits> // для numeric_limits
 #include "Game.h"
 
-using namespace std;
+void clearInputBuffer() {
+    std::cin.clear();
+    while (std::cin.get() != '\n') continue;
+}
 
-int main() {
-    cout << "\t\tWelcome to Blackjack!\n";
-
+int getNumberOfPlayers() {
     int numPlayers = 0;
-    while (true) {
-        cout << "How many players? (1 - 7): ";
-        cin >> numPlayers;
+    bool validInput = false;
 
-        if (cin.fail()) {
-            cin.clear(); // Сброс флага ошибки
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Очистка буфера
-            cout << "Invalid input. Please enter a number between 1 and 7.\n";
+    while (!validInput) {
+        std::cout << "How many players? (1 - 7): ";
+        if (!(std::cin >> numPlayers)) {
+            std::cout << "Invalid input. Please enter a number between 1 and 7.\n";
+            clearInputBuffer();
         }
         else if (numPlayers < 1 || numPlayers > 7) {
-            cout << "Please enter a number between 1 and 7.\n";
+            std::cout << "Number of players must be between 1 and 7.\n";
         }
         else {
-            break;
+            validInput = true;
         }
     }
 
-    vector<string> names;
+    return numPlayers;
+}
+
+char getPlayAgainResponse() {
+    char again;
+    bool validInput = false;
+
+    while (!validInput) {
+        std::cout << "\nDo you want to play again? (Y/N): ";
+        std::cin >> again;
+
+        if (again == 'y' || again == 'Y' || again == 'n' || again == 'N') {
+            validInput = true;
+        }
+        else {
+            std::cout << "Invalid input. Please enter Y or N.\n";
+            clearInputBuffer();
+        }
+    }
+
+    return again;
+}
+
+int main() {
+    std::cout << "\t\tWelcome to Blackjack!\n";
+
+    int numPlayers = getNumberOfPlayers();
+
+    std::vector<std::string> names;
+    std::string name;
     for (int i = 0; i < numPlayers; ++i) {
-        string name;
-        while (true) {
-            cout << "Enter player " << i + 1 << " name: ";
-            cin >> name;
-
-            if (cin.fail()) {
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "Invalid name. Please try again.\n";
-            }
-            else if (name.empty()) {
-                cout << "Name cannot be empty. Try again.\n";
-            }
-            else {
-                names.push_back(name);
-                break;
-            }
-        }
+        std::cout << "Enter player name: ";
+        std::cin >> name;
+        names.push_back(name);
     }
 
-    try {
-        Game aGame(names);
-        char again = 'y';
-        while (again != 'n' && again != 'N') {
-            aGame.Play();
-            cout << "\nDo you want to play again? (Y/N): ";
-            cin >> again;
-        }
-    }
-    catch (const exception& ex) {
-        cerr << "Error occurred: " << ex.what() << endl;
-    }
-    catch (...) {
-        cerr << "Unknown error occurred." << endl;
+    std::cout << std::endl;
+    Game aGame(names);
+    char again = 'y';
+    while (again != 'n' && again != 'N') {
+        aGame.Play();
+        again = getPlayAgainResponse();
     }
 
-    cout << "\nThanks for playing! Goodbye!\n";
     return 0;
 }

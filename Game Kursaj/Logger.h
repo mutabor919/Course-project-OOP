@@ -12,4 +12,4 @@ private:
     std::ofstream m_LogFile;
 };
 
-extern Logger g_Logger; // ќбъ€вление глобального объекта
+extern Logger g_Logger;

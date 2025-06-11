@@ -8,10 +8,8 @@
 #include "Logger.h"
 #include "GenericPlayer.h"
 
-using namespace std;
-
-Game::Game(const vector<string>& names) {
-    for (vector<string>::const_iterator pName = names.begin(); pName != names.end(); ++pName) {
+Game::Game(const std::vector<std::string>& names) {
+    for (std::vector<std::string>::const_iterator pName = names.begin(); pName != names.end(); ++pName) {
         m_Players.push_back(Player(*pName));
     }
     srand(static_cast<unsigned int>(time(0)));
@@ -22,12 +20,12 @@ Game::Game(const vector<string>& names) {
 Game::~Game() {}
 
 void Game::Play() {
-    for (vector<Player>::iterator pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer) {
+    for (std::vector<Player>::iterator pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer) {
         pPlayer->PlaceBet();
     }
 
     for (int i = 0; i < 2; ++i) {
-        for (vector<Player>::iterator pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer) {
+        for (std::vector<Player>::iterator pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer) {
             m_Deck.Deal(*pPlayer);
         }
         m_Deck.Deal(m_House);
@@ -35,27 +33,27 @@ void Game::Play() {
 
     m_House.FlipFirstCard();
 
-    for (vector<Player>::iterator pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer) {
-        cout << *pPlayer << endl;
+    for (std::vector<Player>::iterator pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer) {
+        std::cout << *pPlayer << std::endl;
     }
 
-    cout << m_House << endl;
+    std::cout << m_House << std::endl;
 
-    for (vector<Player>::iterator pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer) {
+    for (std::vector<Player>::iterator pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer) {
         m_Deck.AdditionalCards(*pPlayer);
     }
 
     m_House.FlipFirstCard();
-    cout << endl << m_House;
+    std::cout << std::endl << m_House;
     m_Deck.AdditionalCards(m_House);
 
     if (m_House.IsBusted()) {
-        for (vector<Player>::iterator pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer) {
+        for (std::vector<Player>::iterator pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer) {
             if (!pPlayer->IsBusted()) pPlayer->Win();
         }
     }
     else {
-        for (vector<Player>::iterator pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer) {
+        for (std::vector<Player>::iterator pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer) {
             if (!pPlayer->IsBusted()) {
                 if (pPlayer->GetTotal() > m_House.GetTotal())
                     pPlayer->Win();
@@ -67,7 +65,7 @@ void Game::Play() {
         }
     }
 
-    for (vector<Player>::iterator pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer) {
+    for (std::vector<Player>::iterator pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer) {
         pPlayer->ShowStats();
     }
 
@@ -78,7 +76,7 @@ void Game::Play() {
 
     for (auto it = m_Players.begin(); it != m_Players.end();) {
         if (it->IsBankrupt()) {
-            cout << it->GetName() << " is bankrupt and removed from the game.\n";
+            std::cout << it->GetName() << " is bankrupt and removed from the game.\n";
             g_Logger.Log(it->GetName() + " is bankrupt and removed from the game.");
             it = m_Players.erase(it);
         }
@@ -88,7 +86,7 @@ void Game::Play() {
     }
 
     if (m_Players.empty()) {
-        cout << "All players are bankrupt. Game over.\n";
+        std::cout << "All players are bankrupt. Game over.\n";
         exit(0);
     }
 }

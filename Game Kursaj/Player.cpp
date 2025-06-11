@@ -3,28 +3,43 @@
 #include <iostream>
 
 
-Player::Player(const string& name) : GenericPlayer(name) {}
+Player::Player(const std::string& name) : GenericPlayer(name) {}
 
 Player::~Player() {}
 
 bool Player::IsHitting() const {
-    cout << m_Name << ", do you want a hit? (Y/N): ";
+    std::cout << m_Name << ", do you want a hit? (Y/N): ";
     char response;
-    cin >> response;
-    return (response == 'y' || response == 'Y');
+    std::cin >> response;
+
+    while (true) {
+        if (response == 'y' || response == 'Y') {
+            return true;
+        }
+        else if (response == 'n' || response == 'N') {
+            return false;
+        }
+        else {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+            std::cout << "Invalid input. Please enter Y or N: ";
+            std::cin >> response;
+        }
+    }
 }
 
 bool Player::IsBankrupt() const {
     return m_Bet.IsBankrupt();
 }
 
-string Player::GetName() const {
+std::string Player::GetName() const {
     return m_Name;
 }
 
 void Player::PlaceBet() {
     if (m_Bet.IsBankrupt()) {
-        cout << m_Name << " has no money left and is out of the game.\n";
+        std::cout << m_Name << " has no money left and is out of the game.\n";
         g_Logger.Log(m_Name + " is bankrupt and out of the game.");
         return;
     }
@@ -32,11 +47,11 @@ void Player::PlaceBet() {
     int amount;
     bool validBet = false;
     while (!validBet) {
-        cout << m_Name << ", your balance: " << m_Bet.GetBalance() << ". Enter your bet: ";
-        cin >> amount;
+        std::cout << m_Name << ", your balance: " << m_Bet.GetBalance() << ". Enter your bet: ";
+        std::cin >> amount;
         validBet = m_Bet.PlaceBet(amount);
     }
-    g_Logger.Log(m_Name + " placed a bet of " + to_string(amount));
+    g_Logger.Log(m_Name + " placed a bet of " + std::to_string(amount));
 }
 
 void Player::ShowStats() {
@@ -44,21 +59,21 @@ void Player::ShowStats() {
 }
 
 void Player::Win() {
-    cout << m_Name << " wins.\n";
+    std::cout << m_Name << " wins.\n";
     m_Bet.Win();
     m_Stats.RecordWin();
     g_Logger.Log(m_Name + " wins.");
 }
 
 void Player::Lose() {
-    cout << m_Name << " loses.\n";
+    std::cout << m_Name << " loses.\n";
     m_Bet.Lose();
     m_Stats.RecordLoss();
     g_Logger.Log(m_Name + " loses.");
 }
 
 void Player::Push() {
-    cout << m_Name << " pushes.\n";
+    std::cout << m_Name << " pushes.\n";
     m_Bet.Push();
     m_Stats.RecordPush();
     g_Logger.Log(m_Name + " pushes.");
