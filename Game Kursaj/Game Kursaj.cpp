@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <vector>
 #include <string>
 #include "Game.h"
@@ -50,7 +50,7 @@ char getPlayAgainResponse() {
 }
 
 int main() {
-    std::cout << "\t\tWelcome to Blackjack!\n";
+    std::cout << "Welcome to Blackjack!\n";
 
     int numPlayers = getNumberOfPlayers();
 

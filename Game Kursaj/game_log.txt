@@ -406,3 +406,6 @@ f placed a bet of 100
 ¢Î‰ is bankrupt and removed from the game.
 ÄÇõ placed a bet of 1
 ÄÇõ loses.
+DSA placed a bet of 100
+DSA loses.
+DSA is bankrupt and removed from the game.
